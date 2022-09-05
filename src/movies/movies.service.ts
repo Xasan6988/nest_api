@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { InjectModel } from 'nestjs-typegoose';
-import { FilesService } from 'src/files/files.service';
+import { FilesService } from '../files/files.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { Movie } from './movies.model';
 
