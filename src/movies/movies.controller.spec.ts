@@ -29,7 +29,7 @@ describe('Movie controller', () => {
   beforeEach(async () => {
     function mockMovieModel(dto: any) {
       this.data = dto;
-      this.save =() => {
+      this.save = () => {
         return this.data;
       }
     }

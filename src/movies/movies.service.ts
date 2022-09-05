@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { InjectModel } from 'nestjs-typegoose';
 import { FilesService } from '../files/files.service';
@@ -34,10 +34,20 @@ export class MoviesService {
   }
 
   async update(dto: Partial<CreateMovieDto> & {id: string}) {
-    return this.movieModel.findByIdAndUpdate(dto.id, dto, {new: true}).exec();
+    const updated = await this.movieModel.findByIdAndUpdate(dto.id, dto, {new: true}).exec();
+    if (! updated) {
+      throw new NotFoundException('Movie not found');
+    }
+    return updated;
   }
 
   async delete(id: string) {
-    return this.movieModel.findByIdAndDelete(id).exec();
+    const deleted = await this.movieModel.findByIdAndDelete(id).exec();
+
+    if (!deleted) {
+      throw new NotFoundException('Movie not found');
+    }
+
+    return deleted;
   }
 }
