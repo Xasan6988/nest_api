@@ -1,9 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { prop } from '@typegoose/typegoose';
+import { prop, index } from '@typegoose/typegoose';
 import { Base, TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 
 
 export interface Movie extends Base {}
+@index({title: 'text', description: 'text', year: 'text'})
 export class Movie extends TimeStamps {
   @ApiProperty({example: 'Titanic', description: 'Film`s title'})
   @prop({required: true})

@@ -55,4 +55,9 @@ export class MoviesController {
     ) {
     return this.moviesService.delete(id);
   }
+
+  @Post('/search')
+  search(@Body('search') search: string) {
+    return this.moviesService.search(search);
+  }
 }

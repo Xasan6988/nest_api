@@ -50,4 +50,14 @@ export class MoviesService {
 
     return deleted;
   }
+
+  async search(search: string) {
+    const searched = await this.movieModel.find({$text: {$search: search, $caseSensitive: false}}).exec();
+
+    if (!searched.length) {
+      throw new NotFoundException('Searched movie not found');
+    }
+
+    return searched;
+  }
 }

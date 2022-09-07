@@ -11,7 +11,9 @@ export const getMongoConfig = async (configService: ConfigService): Promise<Type
 const getMongoString = (config: ConfigService): string =>
   'mongodb://' +
   // config.get('MONGO_LOGIN') +
+  // ':' +
   // config.get('MONGO_PASS') +
+  // '@' +
   config.get('MONGO_HOST') +
   ':' +
   config.get('MONGO_PORT') +
@@ -20,4 +22,5 @@ const getMongoString = (config: ConfigService): string =>
 
 const getMongoOptions = (): Partial<TypegooseModuleOptions> => ({
   useUnifiedTopology: true,
+  authSource: 'admin'
 });
