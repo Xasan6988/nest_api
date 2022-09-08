@@ -4,6 +4,7 @@ import { TypegooseModule } from 'nestjs-typegoose';
 import { getMongoConfig } from './configs/mongo.config';
 import { MoviesModule } from './movies/movies.module';
 import { FilesModule } from './files/files.module';
+import { ReviewsModule } from './reviews/reviews.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -15,7 +16,8 @@ import { FilesModule } from './files/files.module';
       useFactory: getMongoConfig,
     }),
     MoviesModule,
-    FilesModule
+    FilesModule,
+    ReviewsModule
   ],
   controllers: [],
   providers: [],

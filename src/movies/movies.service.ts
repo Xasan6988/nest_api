@@ -4,11 +4,13 @@ import { InjectModel } from 'nestjs-typegoose';
 import { FilesService } from '../files/files.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { Movie } from './movies.model';
+import { Review } from 'src/reviews/reviews.model';
 
 @Injectable()
 export class MoviesService {
   constructor (
     @InjectModel(Movie) private readonly movieModel: ModelType<Movie>,
+    @InjectModel(Review) private readonly reviewModel: ModelType<Review>,
     private readonly fileService: FilesService
   ) {}
 
@@ -17,13 +19,19 @@ export class MoviesService {
   }
 
   async getById(id: string) {
+    // const objectId = new mongoose.Types.ObjectId(id);
     const movie = await this.movieModel.findById(id);
+    const reviews = await this.reviewModel.find({movieId: id});
+    const reviewsCount = reviews.length;
+    const reviewsAvg = (reviews.reduce((sum, rating) => {
+      return sum += rating.rating;
+    }, 0) / reviews.length);
 
     if (!movie) {
       throw new HttpException('Movie not found', HttpStatus.NOT_FOUND);
     }
 
-    return movie;
+    return {movie, reviews, reviewsCount, reviewsAvg};
   }
 
   async create(dto: CreateMovieDto, file: any) {

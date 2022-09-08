@@ -1,0 +1,27 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { prop } from '@typegoose/typegoose';
+import { Base, TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
+import { Types } from 'mongoose';
+
+export interface Review extends Base {}
+export class Review extends TimeStamps {
+  @ApiProperty({example: 'John', description: 'Reviewer`s name'})
+  @prop()
+  name: string
+
+  @ApiProperty({example: 'How beautuful actors', description: 'Review`s title  '})
+  @prop()
+  title: string
+
+  @ApiProperty({example: 'In my opinion...', description: 'Review`s text'})
+  @prop()
+  description: string
+
+  @ApiProperty({example: '4', description: 'Review`s rating'})
+  @prop()
+  rating: number
+
+  @ApiProperty({example: 'Movie ID', description: 'Mongo Object Id'})
+  @prop()
+  movieId: Types.ObjectId;
+}

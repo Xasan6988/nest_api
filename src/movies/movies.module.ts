@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
-import { getModelToken, TypegooseModule } from 'nestjs-typegoose';
+import { TypegooseModule } from 'nestjs-typegoose';
 import { FilesModule } from 'src/files/files.module';
+import { Review } from 'src/reviews/reviews.model';
 import { MoviesController } from './movies.controller';
 import { Movie } from './movies.model';
 import { MoviesService } from './movies.service';
@@ -13,7 +14,13 @@ import { MoviesService } from './movies.service';
         schemaOptions: {
           collection: 'movies'
         }
-      }
+      },
+      {
+        typegooseClass: Review,
+        schemaOptions: {
+          collection: 'reviews'
+        }
+      },
     ]),
     FilesModule
   ],
