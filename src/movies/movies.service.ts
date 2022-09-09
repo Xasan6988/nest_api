@@ -5,7 +5,7 @@ import { FilesService } from '../files/files.service';
 import {Types} from 'mongoose';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { Movie } from './movies.model';
-import { Review } from 'src/reviews/reviews.model';
+import { Review } from '../reviews/reviews.model';
 
 @Injectable()
 export class MoviesService {
@@ -33,7 +33,7 @@ export class MoviesService {
       throw new HttpException('Movie not found', HttpStatus.NOT_FOUND);
     }
 
-    return {movie, reviews, reviewsCount, reviewsAvg};
+    return {movie ,reviews, reviewsCount, reviewsAvg};
 
     // const objectId = Types.ObjectId.createFromHexString(id);
     // console.log(objectId);

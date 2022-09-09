@@ -44,7 +44,7 @@ describe('Movie controller', () => {
             .mockImplementation((dto, file) => ({...dto, id, image: file})),
             getById: jest
             .fn()
-            .mockImplementation((id) => ({...MockCreateMovieDto, id, image: fileName})),
+            .mockImplementation((id) => ({movie: {...MockCreateMovieDto, id, image: fileName}, reviews: [], reviewsCount: 0, reviewsAvg: null})),
             getAll: jest
             .fn()
             .mockResolvedValue([{...MockCreateMovieDto, image: fileName, id}]),
@@ -82,8 +82,13 @@ describe('Movie controller', () => {
 
   it('getById', async () => {
     const result = {
-      ...MockCreateMovieDto,
-      id, image: fileName
+      movie: {
+        ...MockCreateMovieDto,
+        id, image: fileName
+      },
+      reviews: [],
+      reviewsCount: 0,
+      reviewsAvg: null
     };
     expect(await movieController.getById(id)).toEqual(result);
   });

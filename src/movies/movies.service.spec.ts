@@ -4,6 +4,7 @@ import { FilesService } from '../files/files.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { disconnect } from 'mongoose';
+import { Review } from '../reviews/reviews.model';
 
 
 
@@ -27,6 +28,12 @@ describe('Movie Service', () => {
             typegooseClass: Movie,
             schemaOptions: {
               collection: 'movies'
+            }
+          },
+          {
+            typegooseClass: Review,
+            schemaOptions: {
+              collection: 'reviews'
             }
           }
         ]),
@@ -68,7 +75,7 @@ describe('Movie Service', () => {
   it('getById', async () => {
     const movie = await service.getById(objectId);
     expect(movie).toBeDefined();
-    expect(movie._id).toEqual(objectId);
+    expect(movie.movie._id).toEqual(objectId);
   });
 
   it('getById - NOT FOUND', async () => {
