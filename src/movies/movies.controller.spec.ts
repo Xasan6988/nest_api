@@ -18,7 +18,6 @@ const MockCreateMovieDto: CreateMovieDto = {
 }
 
 describe('Movie controller', () => {
-  let movieService: MoviesService;
   let movieController: MoviesController;
   let fileService: FilesService;
 
@@ -63,7 +62,6 @@ describe('Movie controller', () => {
       ],
       imports: [FilesModule]
     }).compile()
-    movieService = moduleRef.get<MoviesService>(MoviesService);
     movieController = moduleRef.get<MoviesController>(MoviesController);
     fileService = moduleRef.get<FilesService>(FilesService);
   });

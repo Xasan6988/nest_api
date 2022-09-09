@@ -18,6 +18,7 @@ export class ReviewsService {
       throw new NotFoundException('Reviews not found');
     }
 
+    return reviews;
   }
 
   async getByMovieId(movieId: string) {
