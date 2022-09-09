@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestj
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { InjectModel } from 'nestjs-typegoose';
 import { FilesService } from '../files/files.service';
+import {Types} from 'mongoose';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { Movie } from './movies.model';
 import { Review } from 'src/reviews/reviews.model';
@@ -19,7 +20,8 @@ export class MoviesService {
   }
 
   async getById(id: string) {
-    // const objectId = new mongoose.Types.ObjectId(id);
+
+    // I testing aggregate and manual getting movie with reviews, and aggregate work in 5 times slower
     const movie = await this.movieModel.findById(id);
     const reviews = await this.reviewModel.find({movieId: id});
     const reviewsCount = reviews.length;
@@ -32,6 +34,50 @@ export class MoviesService {
     }
 
     return {movie, reviews, reviewsCount, reviewsAvg};
+
+    // const objectId = Types.ObjectId.createFromHexString(id);
+    // console.log(objectId);
+    // const movie = await this.movieModel.aggregate([
+    //   {
+    //     $match: {
+    //       _id: objectId
+    //     }
+    //   },
+    //   {
+    //     $sort: {
+    //       _id: 1
+    //     }
+    //   },
+    //   {
+    //     $lookup: {
+    //       from: 'reviews',
+    //       localField: '_id',
+    //       foreignField: 'productId',
+    //       as: 'reviews'
+    //     }
+    //   },
+    //   {
+    //     $addFields: {
+    //       reviewCount: { $size: '$reviews' },
+    //       reviewAvg: { $avg: '$reviews.rating' },
+    //       reviews: {
+    //         $function: {
+    //           body: `function(reviews) {
+    //             reviews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    //             return reviews;
+    //           }`,
+    //           args: ['$reviews'],
+    //           lang: 'js'
+    //         }
+    //       }
+    //     }
+    //   }
+    // ]).exec();
+    // if (!movie[0]) {
+    //   throw new NotFoundException('Movie not found');
+    // }
+
+    // return movie[0];
   }
 
   async create(dto: CreateMovieDto, file: any) {
