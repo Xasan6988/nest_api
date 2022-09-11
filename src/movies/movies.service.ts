@@ -81,6 +81,11 @@ export class MoviesService {
   }
 
   async create(dto: CreateMovieDto, file: any) {
+    if (!file) {
+      const movie = new this.movieModel(dto);
+      await movie.save();
+      return movie;
+    }
     const filename = await this.fileService.save(file);
     const movie = new this.movieModel({...dto, image: filename});
     await movie.save();

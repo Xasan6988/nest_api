@@ -35,7 +35,7 @@ export class ReviewsController {
   }
 
   @ApiOperation({summary: 'Delete review by id'})
-  @ApiResponse({status: 201, type: Review})
+  @ApiResponse({status: 200, type: Review})
   @Delete(':id')
   delete(@Param('id') reviewId: string) {
     return this.reviewsService.delete(reviewId);

@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsString, IsNumber } from 'class-validator'
+import { Types } from 'mongoose'
 
 export class CreateReviewDto {
   @ApiProperty({example: 'John', description: 'Reviewer`s name'})
@@ -20,5 +21,5 @@ export class CreateReviewDto {
 
   @ApiProperty({example: 'Movie ID', description: 'Mongo Object Id'})
   @IsString()
-  movieId: string
+  movieId: Types.ObjectId
 }

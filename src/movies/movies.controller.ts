@@ -39,7 +39,7 @@ export class MoviesController {
   }
 
   @ApiOperation({summary: 'Update existing movie'})
-  @ApiResponse({status: 201, type: Movie})
+  @ApiResponse({status: 200, type: Movie})
   @Patch()
   update(
     @Body() dto: Partial<CreateMovieDto> & {id: string}
@@ -48,7 +48,7 @@ export class MoviesController {
   }
 
   @ApiOperation({summary: 'Delete existing movie'})
-  @ApiResponse({status: 201, type: Movie})
+  @ApiResponse({status: 200, type: Movie})
   @Delete(':id')
   delete(
     @Param('id') id: string
